@@ -1,0 +1,22 @@
+---
+title: "EDS 213 Group Project"
+author: "Cullen, Desik, Julia, and Ryan"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(metajam)
+library(tidyverse)
+library(here)
+library(lubridate)
+```
+
+
+```{r}
+
+```
+
+
