@@ -12,11 +12,39 @@ library(metajam)
 library(tidyverse)
 library(here)
 library(lubridate)
+library(httr2)
+library(purrr)
+library(janitor)
+# library(xml2)
+library(XML)
 ```
 
+Our group discovered this dataset while searching the DataOne repository for “coral bleaching” datasets. This particular dataset focuses on the 2016 El Nino event during the summer as observed in the Indian and Pacific Ocean. Data Source: https://search.dataone.org/view/doi%3A10.5063%2FF1WQ024C
+
+```{r error = TRUE}
+data_url <- "https://cn.dataone.org/cn/v2/resolve/urn%3Auuid%3A038f9645-39fd-42c7-ac4e-8c78f68f72dc"
+download_d1_data(data_url, path = ".")
+```
+```{r}
+data_path <- here::here("doi_10.5063_F1WQ024C__masterfile_29Oct2017__csv")
+```
+
+```{r include=FALSE}
+df <- read_d1_files(data_path)
+```
 
 ```{r}
-
+full_meta <- xmlParse(file = here(
+  "doi_10.5063_F1WQ024C__masterfile_29Oct2017__csv", 
+  "masterfile_29Oct2017__full_metadata.xml")) %>% 
+  xmlToDataFrame
+# print(full_meta)
 ```
 
+```{r}
+corals <- df$data %>% 
+  janitor::clean_names()
+
+coral_meta <- df$summary_metadata
+```
 
