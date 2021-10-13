@@ -30,7 +30,7 @@ data_path <- here::here("doi_10.5063_F1WQ024C__masterfile_29Oct2017__csv")
 ```
 
 ```{r include=FALSE}
-df <- read_d1_files(data_path)
+coral <- read_d1_files(data_path)
 ```
 
 ```{r}
@@ -42,16 +42,26 @@ full_meta <- xmlParse(file = here(
 ```
 
 ```{r}
-corals <- df$data %>% 
+corals <- coral$data %>% 
   janitor::clean_names()
 
-coral_meta <- df$summary_metadata
+coral_meta <- coral$summary_metadata
 ```
-
-
 
 ```{r}
-knitr::kable(coral_meta)
+# knitr::kable(coral_meta)
 ```
+
+```{r}
+oni <- read.table( # Read in  ONI to be added to all data
+  "https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt",
+  header = T) %>%
+  dplyr::mutate(date = as.Date(ISOdate(YR, MON, 1))) %>%
+  dplyr::rename(oni_anomaly = ANOM,
+                month = MON,
+                year = YR) %>% 
+  dplyr::select(year, month, date, oni_anomaly)
+```
+
 
 
