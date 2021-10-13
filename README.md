@@ -1,6 +1,6 @@
-# EDS 213 Group Project
+# EDS 213 Group Project - Group 4
 
-Cullen, Desik, Ryan, and Julia (Group 4)
+Cullen Molitor, Desik Somasundaram, Ryan Munnikhuis, and Julia Parish
 
 ## Our environmental question:
 What is the effect of sea surface temperature on coral bleaching?
