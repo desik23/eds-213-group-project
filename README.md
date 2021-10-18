@@ -15,7 +15,8 @@ https://coralreefwatch.noaa.gov/satellite/bleachingoutlook_cfs/outlook_cfs.php
 https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt
 
 ## Data Semantics
-Our data analysis synthesizes two datasets to compute Simpson's diversity index which we defined. 
+Our data analysis synthesizes two datasets to compute Simpson's diversity index. Our group researched how the vegan package computes the
+Simpson's diversity index and searched for the subclass with species diversity that best aligned with our definition. 
 
 This definition in the Cerrado concepts and plant community dynamics ontology best aligned with our definition:
 "the simplest measure of the character of community that takes into account both the abundance patterns
