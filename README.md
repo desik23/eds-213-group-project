@@ -13,3 +13,12 @@ https://search.dataone.org/view/doi%3A10.5063%2FF1WQ024C
 https://coralreefwatch.noaa.gov/satellite/bleachingoutlook_cfs/outlook_cfs.php
 
 https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt
+
+## Data Semantics
+Our data analysis synthesizes two datasets to compute Simpson's diversity index which we defined. 
+
+This definition in the Cerrado concepts and plant community dynamics ontology best aligned with our definition:
+"the simplest measure of the character of community that takes into account both the abundance patterns
+and the species richness" (Begon et al., 2006).
+ID: http://cerrado.linkeddata.es/ecology/ccon#SimpsonsIndex
+
