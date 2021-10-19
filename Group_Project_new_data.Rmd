@@ -58,13 +58,17 @@ oni <- read.table( # Read in  ONI to be added to all data
 
 ```{r}
 coral_oni <- corals %>% 
-  pivot_longer(cols = 5:18, names_to = "species", values_to = "cover")
-  # dplyr::left_join(oni) %>% 
-  dplyr::group_by(year, month, location) %>% 
-  dplyr::summarise(simpson_index = vegan::diversity(index = "simpson"))
+  pivot_longer(cols = 5:18, names_to = "species", values_to = "cover") %>% 
+  dplyr::group_by(system, reef, year, month, location) %>% 
+  dplyr::summarise(simpson_index = vegan::diversity(cover, index = "simpson")) %>% 
+  dplyr::left_join(oni)
 ```
 
 
+```{r}
+mod <- lm(simpson_index ~ roll_3_month_mean, data = coral_oni)
+summary(mod)
+```
 
 
 
