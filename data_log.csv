@@ -1,0 +1,10 @@
+"URL or identifier to the 
+data source",Short Data Description,"Date the data 
+was last accessed",Data Provider's Name (person or institution),Data Creator/Owner's Email/contact,"downloaded File location 
+(cloud drive, path on server; e.g. google drive link) ","Filename 
+(as stored on your Shared Drive)",Team member who got the data (email),"Used in your 
+analysis? (Y/N)"
+https://search.dataone.org/view/doi%3A10.5063%2FF1WQ024C,Coral bleaching data collected during the summer months of 2016 in the Indian and Pacific Oceans. ,10/13/2021,"Tim McClanahan, Wildlife Conservation Society; Emily Darling, Wildlife Conservation Society","Tim McClanahan, tmcclanahan@wcs.org; Emily Darling, edarling@wcs.org",https://knb.ecoinformatics.org/knb/d1/mn/v2/packages/application%2Fbagit-097/urn%3Auuid%3A816edbb4-f33c-4eba-a66e-91c5d8e2f5ec,,cullen_molitor@ucsb.edu,N
+https://www.cpc.ncep.noaa.gov/data/indices/,Monthly input to the Oceanic Niño Index using Monthly ERSSTv5 (centered base periods) Niño 3.4 (5oNorth-5oSouth) (170-120oWest)) dataset,2021-10-13,"Jon Hoopingarner, NOAA Climate Predictor Center","Jon Hoopingarner, Jon.Hoopingarner@noaa.gov
+",http://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt,,cullen_molitor@ucsb.edu,Y
+https://search.dataone.org/view/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fmetadata%2Feml%2Fedi%2F952%2F1,Scott Reef and Rowley Shoals Coral Bleaching Data,2021-10-13,"James P Gilmour, AIMS; Kylie Cook, AIMS; Nicole Ryan, AIMS","James Gilmour, j.gilmour@aims.gov.au; Kylie Cook, k.cook@aims.gov.au; Nicole Ryan, n.ryan@aims.gov.au",https://cn.dataone.org/cn/v2/resolve/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fdata%2Feml%2Fedi%2F952%2F1%2Ff6212784c45d0a077f2c863868d22c4b,,cullen_molitor@ucsb.edu,Y
