@@ -16,7 +16,7 @@ NOAA/ National Weather Service National Centers for Environmental Prediction Cli
 
 ## Data Log 
 
-The data log tracks the metadata of datasets collected for our analysis. Metadata within the data log includes: the URL or identifier to the data source, a brief description of the dataset, date the data was last accessed, authors and organizations of data, contact information of authors, download path to data set, data set name in sharefile, email of team member who downloaded the data, and whether the data was used in the analysis. 
+The data log(data_log.csv) tracks the metadata of datasets collected for our analysis. Metadata within the data log includes: the URL or identifier to the data source, a brief description of the dataset, date the data was last accessed, authors and organizations of data, contact information of authors, download path to data set, data set name in sharefile, email of team member who downloaded the data, and whether the data was used in the analysis. 
 
 ## Data Management Plan
 
