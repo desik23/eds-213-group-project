@@ -25,6 +25,7 @@ Our group discovered this dataset while searching the DataOne repository for “
 data_url <- "https://cn.dataone.org/cn/v2/resolve/urn%3Auuid%3A038f9645-39fd-42c7-ac4e-8c78f68f72dc"
 download_d1_data(data_url, path = ".")
 ```
+
 ```{r}
 data_path <- here::here("doi_10.5063_F1WQ024C__masterfile_29Oct2017__csv")
 ```
@@ -63,5 +64,8 @@ oni <- read.table( # Read in  ONI to be added to all data
   dplyr::select(year, month, date, oni_anomaly)
 ```
 
+```{r}
+names(corals)
+```
 
 

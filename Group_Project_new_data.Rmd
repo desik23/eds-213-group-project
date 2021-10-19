@@ -1,0 +1,71 @@
+---
+title: "Untitled"
+author: "Cullen, Desik, Julia, and Ryan"
+date: "10/13/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(metajam)
+library(tidyverse)
+library(here)
+library(lubridate)
+library(httr2)
+library(purrr)
+library(janitor)
+library(XML)
+library(zoo)
+library(vegan)
+```
+
+```{r}
+data_url <- "https://cn.dataone.org/cn/v2/resolve/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fdata%2Feml%2Fedi%2F952%2F1%2Ff6212784c45d0a077f2c863868d22c4b"
+download_d1_data(data_url, path = ".")
+```
+
+```{r}
+data_path <- here::here("https_pasta.lternet.edu_package_metadata_eml_edi_952_1__Rowley_Shoals_and_Scott_Reef_Long-term_Reef_Slope_coral__csv")
+```
+
+```{r}
+coral_list <- read_d1_files(data_path)
+```
+
+```{r}
+corals <- coral_list$data %>% 
+  janitor::clean_names() %>% 
+  mutate(year_decimal = format(date_decimal(year_decimal), "%Y-%m-%d"),
+         month = month(year_decimal),
+         year = year(year_decimal)) %>% 
+  rename(date = year_decimal)
+```
+
+```{r}
+oni <- read.table( # Read in  ONI to be added to all data
+  "https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt",
+  header = T) %>%
+  dplyr::mutate(date = as.Date(ISOdate(YR, MON, 1))) %>%
+  dplyr::rename(oni_anomaly = ANOM,
+                month = MON,
+                year = YR) %>% 
+  dplyr::select(year, month, oni_anomaly) %>% 
+  dplyr::mutate(roll_3_month_mean = zoo::rollmean(x = oni_anomaly, k = 3, fill = NA, align = "right"))
+```
+
+```{r}
+coral_oni <- corals %>% 
+  pivot_longer(cols = 5:18, names_to = "species", values_to = "cover")
+  # dplyr::left_join(oni) %>% 
+  dplyr::group_by(year, month, location) %>% 
+  dplyr::summarise(simpson_index = vegan::diversity(index = "simpson"))
+```
+
+
+
+
+
+
