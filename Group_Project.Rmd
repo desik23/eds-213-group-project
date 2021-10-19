@@ -1,6 +1,6 @@
 ---
-title: "EDS 213 Group Project"
-author: "Cullen, Desik, Julia, and Ryan"
+title: "EDS 213 Group Project - Group 04 "
+author: "Cullen Molitor, Desik Somasundaram, Julia Parish, and Ryan Muunikhuis"
 output: 
   html_document:
     code_folding: hide
@@ -8,6 +8,9 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
 library(metajam)
 library(tidyverse)
 library(here)
@@ -15,42 +18,36 @@ library(lubridate)
 library(httr2)
 library(purrr)
 library(janitor)
-# library(xml2)
 library(XML)
+library(zoo)
+library(vegan)
 ```
 
-Our group discovered this dataset while searching the DataOne repository for “coral bleaching.” This particular dataset focuses on the 2016 El Niño event during the summer as observed in the Indian and Pacific Ocean. Data Source: https://search.dataone.org/view/doi%3A10.5063%2FF1WQ024C. The metadata includes the study location, bounding coordinates, time range, taxonomy, and dataset methods. 
 
-```{r error = TRUE}
-data_url <- "https://cn.dataone.org/cn/v2/resolve/urn%3Auuid%3A038f9645-39fd-42c7-ac4e-8c78f68f72dc"
+Our group discovered the Scott Reef and Rowley Shoals Coral Bleaching Data dataset while searching the DataOne repository for “coral bleaching.” This particular dataset focuses on long-term monitoring data from 1994 at reef slope habitats off the coast of northwestern Australia. Data Source: https://search.dataone.org/view/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fmetadata%2Feml%2Fedi%2F952%2F1. The metadata includes the reef system, date range, taxonomy, habitat type, coral coverage, and dataset methods. 
+
+```{r}
+# assign data url to access coral data from DataOne then download
+data_url <- "https://cn.dataone.org/cn/v2/resolve/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fdata%2Feml%2Fedi%2F952%2F1%2Ff6212784c45d0a077f2c863868d22c4b"
 download_d1_data(data_url, path = ".")
 ```
 
 ```{r}
-data_path <- here::here("doi_10.5063_F1WQ024C__masterfile_29Oct2017__csv")
-```
-
-```{r include=FALSE}
-coral <- read_d1_files(data_path)
+# assign data path
+data_path <- here::here("https_pasta.lternet.edu_package_metadata_eml_edi_952_1__Rowley_Shoals_and_Scott_Reef_Long-term_Reef_Slope_coral__csv")
 ```
 
 ```{r}
-full_meta <- xmlParse(file = here(
-  "doi_10.5063_F1WQ024C__masterfile_29Oct2017__csv", 
-  "masterfile_29Oct2017__full_metadata.xml")) %>% 
-  xmlToDataFrame
-# print(full_meta)
+coral_list <- read_d1_files(data_path)
 ```
 
 ```{r}
-corals <- coral$data %>% 
-  janitor::clean_names()
-
-coral_meta <- coral$summary_metadata
-```
-
-```{r}
-# knitr::kable(coral_meta)
+corals <- coral_list$data %>% 
+  janitor::clean_names() %>% 
+  mutate(year_decimal = format(date_decimal(year_decimal), "%Y-%m-%d"),
+         month = month(year_decimal),
+         year = year(year_decimal)) %>% 
+  rename(date = year_decimal)
 ```
 
 ```{r}
@@ -61,11 +58,22 @@ oni <- read.table( # Read in  ONI to be added to all data
   dplyr::rename(oni_anomaly = ANOM,
                 month = MON,
                 year = YR) %>% 
-  dplyr::select(year, month, date, oni_anomaly)
+  dplyr::select(year, month, oni_anomaly) %>% 
+  dplyr::mutate(roll_3_month_mean = zoo::rollmean(x = oni_anomaly, k = 3, fill = NA, align = "right"))
 ```
 
 ```{r}
-names(corals)
+# join corals and oni data
+coral_oni <- corals %>% 
+  pivot_longer(cols = 5:18, names_to = "species", values_to = "cover") %>% 
+  dplyr::group_by(system, reef, year, month, location) %>% 
+  dplyr::summarise(simpson_index = vegan::diversity(cover, index = "simpson")) %>% 
+  dplyr::left_join(oni)
 ```
 
+
+```{r}
+mod <- lm(simpson_index ~ roll_3_month_mean, data = coral_oni)
+summary(mod)
+```
 

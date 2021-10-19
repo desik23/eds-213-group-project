@@ -6,13 +6,13 @@ Cullen Molitor, Desik Somasundaram, Ryan Munnikhuis, and Julia Parish
 What is the effect of sea surface temperature on coral bleaching?
 
 ## Data
-Coral bleaching, El Nino effect data, Sea surface temperature data
+Search terms: Coral bleaching, El Nino effect data, Sea surface temperature data
 
-https://search.dataone.org/view/doi%3A10.5063%2FF1WQ024C
+Data Sources:
+James P Gilmour, Kylie L Cook, and Nicole M Ryan. 2021. Scott Reef and Rowley Shoals Coral Bleaching Data. Environmental Data Initiative. https://pasta.lternet.edu/package/metadata/eml/edi/952/1.
 
-https://coralreefwatch.noaa.gov/satellite/bleachingoutlook_cfs/outlook_cfs.php
+NOAA/ National Weather Service National Centers for Environmental Prediction Climate Prediction Center Oceanic Niño Index (ONI) https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt
 
-https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt
 
 ## Data Log 
 
