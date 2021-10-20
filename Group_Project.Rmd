@@ -29,12 +29,12 @@ Our group discovered the Scott Reef and Rowley Shoals Coral Bleaching Data datas
 ```{r error =TRUE}
 # assign data url to access coral data from DataOne then download
 data_url <- "https://cn.dataone.org/cn/v2/resolve/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fdata%2Feml%2Fedi%2F952%2F1%2Ff6212784c45d0a077f2c863868d22c4b"
-download_d1_data(data_url, path = ".")
+download_d1_data(data_url, dir_name = "coral_data", path = ".")
 ```
 
 ```{r}
 # assign data path
-data_path <- here::here("https_pasta.lternet.edu_package_metadata_eml_edi_952_1__Rowley_Shoals_and_Scott_Reef_Long-term_Reef_Slope_coral__csv")
+data_path <- here::here("coral_data")
 ```
 
 ```{r}
