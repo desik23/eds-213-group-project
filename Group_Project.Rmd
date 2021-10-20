@@ -26,7 +26,7 @@ library(vegan)
 
 Our group discovered the Scott Reef and Rowley Shoals Coral Bleaching Data dataset while searching the DataOne repository for “coral bleaching.” This particular dataset focuses on long-term monitoring data from 1994 at reef slope habitats off the coast of northwestern Australia. Data Source: https://search.dataone.org/view/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fmetadata%2Feml%2Fedi%2F952%2F1. The metadata includes the reef system, date range, taxonomy, habitat type, coral coverage, and dataset methods. 
 
-```{r}
+```{r error =TRUE}
 # assign data url to access coral data from DataOne then download
 data_url <- "https://cn.dataone.org/cn/v2/resolve/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fdata%2Feml%2Fedi%2F952%2F1%2Ff6212784c45d0a077f2c863868d22c4b"
 download_d1_data(data_url, path = ".")
