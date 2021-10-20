@@ -68,7 +68,9 @@ coral_oni <- corals %>%
   pivot_longer(cols = 5:18, names_to = "species", values_to = "cover") %>% 
   dplyr::group_by(system, reef, year, month, location) %>% 
   dplyr::summarise(simpson_index = vegan::diversity(cover, index = "simpson")) %>% 
-  dplyr::left_join(oni)
+  dplyr::left_join(oni) 
+
+# readr::write_csv(coral_oni, here("coral_diversity_oceanic_nino_index.csv"))
 ```
 
 
