@@ -54,12 +54,15 @@ corals <- coral_list$data %>%
 oni <- read.table( # Read in  ONI to be added to all data
   "https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt",
   header = T) %>%
-  dplyr::mutate(date = as.Date(ISOdate(YR, MON, 1))) %>%
+  dplyr::mutate(date = as.Date(ISOdate(YR, MON, 1)),
+                date_start = as.Date(ISOdate(YR, MON, 1)),
+                date_end = ceiling_date(date_start, "month")) %>%
   dplyr::rename(oni_anomaly = ANOM,
                 month = MON,
                 year = YR) %>% 
-  dplyr::select(year, month, oni_anomaly) %>% 
-  dplyr::mutate(roll_3_month_mean = zoo::rollmean(x = oni_anomaly, k = 3, fill = NA, align = "right"))
+  dplyr::select(year, month, oni_anomaly, date_start, date_end) %>% 
+  dplyr::mutate(roll_3_month_mean = zoo::rollmean(x = oni_anomaly, k = 3, fill = NA, align = "right")) %>% 
+  filter(date_start > ymd("1994-09-01"))
 ```
 
 ```{r}
@@ -68,14 +71,33 @@ coral_oni <- corals %>%
   pivot_longer(cols = 5:18, names_to = "species", values_to = "cover") %>% 
   dplyr::group_by(system, reef, year, month, location) %>% 
   dplyr::summarise(simpson_index = vegan::diversity(cover, index = "simpson")) %>% 
-  dplyr::left_join(oni) 
+  dplyr::left_join(oni %>% select(-date_start, -date_end)) %>% 
+  dplyr::mutate(date = lubridate::make_date(year = year, month = month, day = 1))
 
 # readr::write_csv(coral_oni, here("coral_diversity_oceanic_nino_index.csv"))
 ```
 
+```{r}
+ggplot() +
+  ggplot2::geom_rect(
+    data = oni,
+    aes(xmin = date_start, xmax = date_end, ymin = -Inf, ymax = .5, fill = oni_anomaly)) +
+  ggplot2::scale_fill_viridis_c(
+    option = "plasma",
+    guide = guide_colorbar(direction = "horizontal", title.position = "top",
+                           order = 2, barheight = unit(.2, "cm"))) +
+  # geom_point() +
+  geom_smooth(data = coral_oni, 
+              aes(x = date, y = simpson_index, color = location),
+              # method = lm, 
+              se = F) +
+  ggplot2::guides(color = guide_legend(order = 1)) +
+  labs() +
+  theme_minimal()
+```
 
 ```{r}
-mod <- lm(simpson_index ~ roll_3_month_mean, data = coral_oni)
+mod <- lm(simpson_index ~ roll_3_month_mean + location, data = coral_oni)
 summary(mod)
 ```
 
