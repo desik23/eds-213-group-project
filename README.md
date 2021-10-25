@@ -6,7 +6,7 @@ Cullen Molitor, Desik Somasundaram, Ryan Munnikhuis, and Julia Parish
 What is the effect of sea surface temperature on coral bleaching?
 
 ## Data
-Search terms: Coral bleaching, El Nino effect data, Sea surface temperature data
+Search terms: coral bleaching, El Nino effect data, sea surface temperature data, species diversity
 
 Data Sources:\
 James P Gilmour, Kylie L Cook, and Nicole M Ryan. 2021. Scott Reef and Rowley Shoals Coral Bleaching Data. Environmental Data Initiative. https://pasta.lternet.edu/package/metadata/eml/edi/952/1.
@@ -37,4 +37,8 @@ This definition in the Cerrado concepts and plant community dynamics ontology be
 "the simplest measure of the character of community that takes into account both the abundance patterns
 and the species richness" (Begon et al., 2006).
 ID: http://cerrado.linkeddata.es/ecology/ccon#SimpsonsIndex
+
+## Link to KNB Repository:
+https://knb.ecoinformatics.org/view/urn%3Auuid%3A56d4fbbf-5fa4-4369-9c5b-bed4f406dadc
+
 
