@@ -29,6 +29,8 @@ Our group discovered the Scott Reef and Rowley Shoals Coral Bleaching Data datas
 ```{r error =TRUE}
 # assign data url to access coral data from DataOne then download
 data_url <- "https://cn.dataone.org/cn/v2/resolve/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fdata%2Feml%2Fedi%2F952%2F1%2Ff6212784c45d0a077f2c863868d22c4b"
+# If data is akready up to date, this will throw an error
+# error=T in header will move past this issue
 download_d1_data(data_url, dir_name = "coral_data", path = ".")
 ```
 
@@ -38,10 +40,12 @@ data_path <- here::here("coral_data")
 ```
 
 ```{r}
+# Read in data with metajam
 coral_list <- read_d1_files(data_path)
 ```
 
 ```{r}
+# Pick out the data read in above and clean it up
 corals <- coral_list$data %>% 
   janitor::clean_names() %>% 
   mutate(year_decimal = format(date_decimal(year_decimal), "%Y-%m-%d"),
@@ -51,7 +55,8 @@ corals <- coral_list$data %>%
 ```
 
 ```{r}
-oni <- read.table( # Read in  ONI to be added to all data
+# Read in  ONI to be joined to coral data
+oni <- read.table(
   "https://origin.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/detrend.nino34.ascii.txt",
   header = T) %>%
   dplyr::mutate(date = as.Date(ISOdate(YR, MON, 1)),
@@ -66,18 +71,23 @@ oni <- read.table( # Read in  ONI to be added to all data
 ```
 
 ```{r}
-# join corals and oni data
+# Calculate the Simpson's diversity index 
+# join corals and ONI data
 coral_oni <- corals %>% 
   pivot_longer(cols = 5:18, names_to = "species", values_to = "cover") %>% 
   dplyr::group_by(system, reef, year, month, location) %>% 
   dplyr::summarise(simpson_index = vegan::diversity(cover, index = "simpson")) %>% 
   dplyr::left_join(oni %>% select(-date_start, -date_end)) %>% 
   dplyr::mutate(date = lubridate::make_date(year = year, month = month, day = 1))
+```
 
+```{r}
+# Un-comment line below to write the updated csv file
 # readr::write_csv(coral_oni, here("coral_diversity_oceanic_nino_index.csv"))
 ```
 
 ```{r fig.height=4, fig.width=9}
+# Plot the coral diversity data with ONI color bar
 ggplot() +
   ggplot2::geom_rect(
     data = oni,
@@ -97,7 +107,8 @@ ggplot() +
 ```
 
 ```{r}
-mod <- lm(simpson_index ~ roll_3_month_mean + location, data = coral_oni)
-summary(mod)
+# In the future think about an appropriate model and explore the relationship
+# mod <- lm(simpson_index ~ roll_3_month_mean + location, data = coral_oni)
+# summary(mod)
 ```
 
