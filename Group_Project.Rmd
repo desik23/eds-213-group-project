@@ -77,20 +77,18 @@ coral_oni <- corals %>%
 # readr::write_csv(coral_oni, here("coral_diversity_oceanic_nino_index.csv"))
 ```
 
-```{r}
+```{r fig.height=4, fig.width=9}
 ggplot() +
   ggplot2::geom_rect(
     data = oni,
-    aes(xmin = date_start, xmax = date_end, ymin = -Inf, ymax = .5, fill = oni_anomaly)) +
+    aes(xmin = date_start, xmax = date_end, ymin = -Inf, ymax = .3, fill = oni_anomaly)) +
   ggplot2::scale_fill_viridis_c(
     option = "plasma",
     guide = guide_colorbar(direction = "horizontal", title.position = "top",
                            order = 2, barheight = unit(.2, "cm"))) +
-  # geom_point() +
-  geom_smooth(data = coral_oni, size = 1,
-              aes(x = date, y = simpson_index, color = location),
-              # method = lm, 
-              se = F) +
+  scale_x_date(date_breaks = "2 year", date_labels = "%Y", expand = expansion(mult = c(0,0))) +
+  geom_line(data = coral_oni, size = 1,
+              aes(x = date, y = simpson_index, color = location)) +
   scale_color_viridis_d() +
   ggplot2::guides(color = guide_legend(order = 1)) +
   labs(fill = "Oceanic Ni\u00f1o Index", color = "Sites", 
